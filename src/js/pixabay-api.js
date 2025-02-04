@@ -1,6 +1,10 @@
 import { markup } from '/js/render-functions';
+import iziToast from 'izitoast';
+import 'izitoast/dist/css/iziToast.min.css';
+import { iziOption } from '../main';
 
 export function getImage(input) {
+  const box = document.querySelector('.gallery');
   const API_KEY = '48621636-2f551eda37f80f5c324cc68cd';
   const query = encodeURIComponent(input);
   const urlParams = new URLSearchParams({
@@ -25,5 +29,11 @@ export function getImage(input) {
     })
     .catch(error => {
       console.error(error);
+      box.innerHTML = '';
+      iziToast.show({
+        ...iziOption,
+        message: 'Sorry, an error happened. Try again',
+      });
+      return;
     });
 }
